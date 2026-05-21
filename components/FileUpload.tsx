@@ -53,6 +53,8 @@ export default function FileUpload({
 
       {/* Drag and Drop Zone */}
       <div
+        role="button"
+        tabIndex={0}
         className={`border-2 border-dashed rounded-lg p-4 text-center cursor-pointer transition-all duration-300 ${
           dragActive
             ? 'border-soarx-cyber-green bg-soarx-cyber-green/10 shadow-soarx-glow-green'
@@ -63,6 +65,12 @@ export default function FileUpload({
         onDragOver={handleDrag}
         onDrop={handleDrop}
         onClick={() => inputRef.current?.click()}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            inputRef.current?.click();
+          }
+        }}
       >
         <input
           ref={inputRef}

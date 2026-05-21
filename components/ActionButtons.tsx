@@ -18,6 +18,7 @@ export default function ActionButtons({
   return (
     <div className="card p-4 m-4 space-y-2">
       <button
+        type="button"
         onClick={onFillExcel}
         disabled={isLoading}
         className="button-primary w-full"
@@ -25,6 +26,7 @@ export default function ActionButtons({
         Fill Excel Automatically
       </button>
       <button
+        type="button"
         onClick={onAnalyzeClient}
         disabled={isLoading}
         className="button-secondary w-full"
@@ -32,6 +34,7 @@ export default function ActionButtons({
         Analyze Client Data
       </button>
       <button
+        type="button"
         onClick={onGenerateReport}
         disabled={isLoading}
         className="button-secondary w-full"
