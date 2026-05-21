@@ -1,0 +1,187 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(135deg, #0A1B2A 0%, #1F2937 100%);
+  color: #C7CED6;
+  position: relative;
+}
+
+/* Animated background grid effect */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(0deg, transparent 24%, rgba(26, 115, 232, 0.05) 25%, rgba(26, 115, 232, 0.05) 26%, transparent 27%, transparent 74%, rgba(26, 115, 232, 0.05) 75%, rgba(26, 115, 232, 0.05) 76%, transparent 77%, transparent),
+    linear-gradient(90deg, transparent 24%, rgba(26, 115, 232, 0.05) 25%, rgba(26, 115, 232, 0.05) 26%, transparent 27%, transparent 74%, rgba(26, 115, 232, 0.05) 75%, rgba(26, 115, 232, 0.05) 76%, transparent 77%, transparent);
+  background-size: 50px 50px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Navigation Bar */
+.navbar-bg {
+  background: linear-gradient(135deg, #0A1B2A 0%, #1A73E8 100%);
+  color: #FFFFFF;
+  box-shadow: 0 4px 20px rgba(26, 115, 232, 0.2);
+  border-bottom: 1px solid rgba(0, 245, 160, 0.1);
+}
+
+.navbar-bg h1 {
+  font-weight: 700;
+  font-size: 1.5rem;
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, #C7CED6 0%, #00F5A0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Card styling */
+.card {
+  @apply bg-soarx-deep-gray border border-soarx-silver/20 rounded-xl shadow-xl backdrop-blur-sm transition-all duration-300;
+}
+
+.card:hover {
+  @apply border-soarx-cyber-green/50 shadow-soarx-glow-green;
+}
+
+/* Chat Messages */
+.chat-message-user {
+  @apply bg-soarx-electric-blue text-white rounded-xl shadow-lg;
+}
+
+.chat-message-ai {
+  @apply bg-soarx-navy text-soarx-silver border border-soarx-silver/20 rounded-xl shadow-lg backdrop-blur-sm;
+}
+
+/* Buttons - SoarX Primary */
+.button-primary {
+  @apply bg-soarx-orange text-white font-semibold rounded-lg px-4 py-2 transition-all duration-200 hover:shadow-soarx-glow border border-soarx-orange hover:border-soarx-electric-blue;
+}
+
+.button-primary:hover {
+  @apply bg-soarx-electric-blue shadow-soarx-glow;
+}
+
+.button-primary:active {
+  @apply scale-95;
+}
+
+.button-primary:disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+/* Buttons - SoarX Secondary */
+.button-secondary {
+  @apply bg-soarx-navy text-soarx-silver border border-soarx-silver/30 rounded-lg px-4 py-2 font-semibold transition-all duration-200 hover:border-soarx-cyber-green;
+}
+
+.button-secondary:hover {
+  @apply border-soarx-cyber-green/80 shadow-soarx-glow-green text-soarx-cyber-green;
+}
+
+.button-secondary:active {
+  @apply scale-95;
+}
+
+.button-secondary:disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+/* Input Fields */
+.input-field {
+  @apply border border-soarx-silver/30 bg-soarx-navy/50 text-soarx-silver rounded-lg px-3 py-2 text-sm transition-all duration-200;
+}
+
+.input-field:focus {
+  @apply outline-none border-soarx-electric-blue bg-soarx-navy/80 shadow-soarx-glow;
+}
+
+.input-field::placeholder {
+  @apply text-soarx-silver/40;
+}
+
+/* Loading Spinner */
+.loading-spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(26, 115, 232, 0.3);
+  border-top-color: #1A73E8;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Sidebar styling */
+.sidebar-bg {
+  @apply bg-soarx-navy/40 border-r border-soarx-silver/10 backdrop-blur-sm;
+}
+
+/* Panel dividers */
+.panel-divider {
+  @apply border-soarx-silver/10;
+}
+
+/* Glow effect for highlights */
+.glow-cyber-green {
+  @apply shadow-soarx-glow-green border-soarx-cyber-green/50;
+}
+
+.glow-electric-blue {
+  @apply shadow-soarx-glow border-soarx-electric-blue/50;
+}
+
+/* Text utilities */
+.text-gradient {
+  background: linear-gradient(135deg, #C7CED6 0%, #00F5A0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-futuristic {
+  @apply font-semibold tracking-wide;
+}
+
+/* Smooth transitions */
+* {
+  @apply transition-colors duration-200;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .navbar-bg h1 {
+    @apply text-lg;
+  }
+
+  .card {
+    @apply rounded-lg;
+  }
+}

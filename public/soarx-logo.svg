@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Background -->
+  <rect width="200" height="200" fill="#0A1B2A"/>
+  
+  <!-- Outer circle -->
+  <circle cx="100" cy="100" r="90" fill="none" stroke="#E67E22" stroke-width="3"/>
+  
+  <!-- Inner circle -->
+  <circle cx="100" cy="100" r="75" fill="none" stroke="#C7CED6" stroke-width="2"/>
+  
+  <!-- S letter -->
+  <text x="100" y="125" font-size="80" font-weight="bold" fill="#E67E22" text-anchor="middle" font-family="Arial, sans-serif">S</text>
+  
+  <!-- Soar label -->
+  <text x="100" y="160" font-size="14" fill="#C7CED6" text-anchor="middle" font-family="Arial, sans-serif" font-weight="bold">SOARX</text>
+</svg>
