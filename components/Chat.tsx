@@ -16,7 +16,7 @@ interface ChatProps {
 }
 
 export default function Chat({ messages, onSendMessage, isLoading }: ChatProps) {
-  const [input, setInput] = React.useState('');
+  const [message, setMessage] = React.useState('');
   const messagesEndRef = React.useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -29,9 +29,9 @@ export default function Chat({ messages, onSendMessage, isLoading }: ChatProps) 
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (input.trim()) {
-      onSendMessage(input);
-      setInput('');
+    if (message.trim()) {
+      onSendMessage(message);
+      setMessage('');
     }
   };
 
@@ -84,15 +84,15 @@ export default function Chat({ messages, onSendMessage, isLoading }: ChatProps) 
         <div className="flex space-x-2">
           <input
             type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
             placeholder="Type your message..."
             disabled={isLoading}
             className="input-field flex-1"
           />
           <button
             type="submit"
-            disabled={isLoading || !input.trim()}
+            disabled={isLoading || !message.trim()}
             className="button-primary disabled:opacity-50"
           >
             Send
