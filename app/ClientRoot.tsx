@@ -8,8 +8,6 @@ import WorkbookSelector from '@/components/WorkbookSelector';
 import SheetSelector from '@/components/SheetSelector';
 import ActionButtons from '@/components/ActionButtons';
 import ResultsPanel from '@/components/ResultsPanel';
-import NavBar from '@/components/NavBar';
-import ClientWrapper from '@/components/ClientWrapper';
 import { sendMessageToReason, uploadFile, generateWordReport } from '@/utils/api';
 
 interface Message {
@@ -40,6 +38,7 @@ export default function ClientRoot() {
   const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState<Result | null>(null);
   const [statusMessage, setStatusMessage] = useState('');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const sheets = useMemo(
     () => (selectedWorkbook ? DEFAULT_SHEETS[selectedWorkbook] ?? [] : []),
@@ -152,106 +151,100 @@ export default function ClientRoot() {
   };
 
   return (
-    <div className="app-shell min-h-screen text-white">
-      <NavBar />
+    <div className="min-h-screen bg-slate-950 text-white">
+      <div className="mx-auto flex h-screen max-w-[1600px] flex-col px-4 py-4 sm:px-6">
+        <header className="flex items-center justify-between gap-4 pb-4">
+          <div>
+            <p className="text-xs uppercase tracking-[0.28em] text-cyan-300/70">SoarX Copilot</p>
+            <h1 className="mt-2 text-2xl font-semibold sm:text-3xl">Finance chat assistant</h1>
+          </div>
+          <button
+            type="button"
+            onClick={() => setSidebarOpen(true)}
+            className="inline-flex rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white transition hover:bg-white/10 lg:hidden"
+          >
+            Tools
+          </button>
+        </header>
 
-      <ClientWrapper>
-        <div className="app-content mx-auto max-w-[1600px]">
-          <aside className="sidebar glass-panel flex flex-col gap-6 p-5">
-            <div className="sidebar-header">
-              <div>
-                <p className="section-label">Workspace</p>
-                <h2 className="mt-3 text-2xl font-semibold tracking-tight text-white">
-                  SoarX Finance Copilot
-                </h2>
+        <div className="relative flex flex-1 overflow-hidden rounded-[2rem] border border-white/10 bg-slate-950/90 shadow-2xl">
+          <main className="flex-1 overflow-hidden">
+            <div className="flex h-full flex-col overflow-hidden">
+              <div className="border-b border-white/10 px-6 py-5">
+                <div className="max-w-3xl">
+                  <p className="text-xs uppercase tracking-[0.3em] text-cyan-300/75">AI Assistant</p>
+                  <h2 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
+                    Ask SoarX for finance insights
+                  </h2>
+                  <p className="mt-2 max-w-2xl text-sm text-white/70">
+                    Upload workbooks, ask questions, and generate reports with a modern chat experience.
+                  </p>
+                </div>
               </div>
-              <div className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs text-cyan-200">
-                Copilot
+
+              {statusMessage ? (
+                <div className="border-b border-white/10 bg-cyan-500/10 px-6 py-3 text-sm text-cyan-100">
+                  {statusMessage}
+                </div>
+              ) : null}
+
+              <div className="flex-1 overflow-hidden">
+                <Chat messages={messages} onSendMessage={handleSendMessage} isLoading={isLoading} />
               </div>
             </div>
+          </main>
 
-            <div className="sidebar-section space-y-4">
-              <div className="sidebar-item">
-                <span className="sidebar-icon">📤</span>
-                Upload Files
+          {sidebarOpen ? (
+            <button
+              type="button"
+              onClick={() => setSidebarOpen(false)}
+              className="fixed inset-0 z-30 bg-black/40 lg:hidden"
+            />
+          ) : null}
+
+          <aside className={`fixed inset-y-0 right-0 z-40 w-full max-w-xs border-l border-white/10 bg-slate-950/95 p-5 shadow-2xl transition-transform duration-300 lg:static lg:block ${sidebarOpen ? 'translate-x-0' : 'translate-x-full'} lg:translate-x-0`}>
+            <div className="mb-5 flex items-center justify-between gap-3">
+              <div>
+                <p className="text-xs uppercase tracking-[0.24em] text-cyan-300/80">Workspace tools</p>
+                <h3 className="mt-2 text-lg font-semibold text-white">Files & actions</h3>
               </div>
+              <button
+                type="button"
+                onClick={() => setSidebarOpen(false)}
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white lg:hidden"
+              >
+                ×
+              </button>
+            </div>
+
+            <div className="space-y-5">
               <FileUpload
                 onFileSelected={handleFileSelected}
                 isLoading={isLoading}
                 uploadedFiles={uploadedFiles}
               />
-            </div>
 
-            <div className="sidebar-section space-y-4">
-              <div className="sidebar-item">
-                <span className="sidebar-icon">📘</span>
-                Workbook
-              </div>
-              <WorkbookSelector
-                selected={selectedWorkbook}
-                onSelect={handleWorkbookSelect}
-              />
-            </div>
+              <WorkbookSelector selected={selectedWorkbook} onSelect={handleWorkbookSelect} />
 
-            <div className="sidebar-section space-y-4">
-              <div className="sidebar-item">
-                <span className="sidebar-icon">🗂️</span>
-                Sheet
-              </div>
               <SheetSelector
                 sheets={sheets}
                 selected={selectedSheet}
                 onSelect={handleSheetSelect}
                 disabled={!selectedWorkbook}
               />
-            </div>
 
-            <div className="sidebar-section space-y-4">
-              <div className="sidebar-item">
-                <span className="sidebar-icon">⚡</span>
-                Actions
-              </div>
               <ActionButtons
                 onFillExcel={handleFillExcel}
                 onAnalyzeClient={handleAnalyzeClient}
                 onGenerateReport={handleGenerateReport}
                 isLoading={isLoading}
               />
-            </div>
-          </aside>
 
-          <main className="chat-area glass-panel flex min-h-0 flex-1 flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-soarx-glow backdrop-blur-3xl">
-            <div className="chat-header border-b border-white/10 px-6 py-5">
-              <div>
-                <p className="section-label">AI Assistant</p>
-                <h1 className="mt-2 text-3xl font-semibold tracking-tight text-white">
-                  Ask SoarX for finance insights
-                </h1>
-                <p className="mt-2 max-w-2xl text-sm text-white/70">
-                  Use the finance Copilot to analyze workbooks, upload client files, and generate advisory reports.
-                </p>
-              </div>
-              <div className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs text-cyan-200">
-                Live mode
-              </div>
-            </div>
-
-            {statusMessage ? (
-              <div className="mx-6 mt-4 rounded-3xl border border-cyan-300/10 bg-cyan-500/10 px-5 py-3 text-sm text-cyan-100">
-                {statusMessage}
-              </div>
-            ) : null}
-
-            <div className="flex-1 overflow-hidden">
-              <Chat messages={messages} onSendMessage={handleSendMessage} isLoading={isLoading} />
-            </div>
-
-            <div className="border-t border-white/10 p-4">
               <ResultsPanel result={result} isVisible={!!result} />
             </div>
-          </main>
+          </aside>
         </div>
-      </ClientWrapper>
+      </div>
     </div>
   );
 }
