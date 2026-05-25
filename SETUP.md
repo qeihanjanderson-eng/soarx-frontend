@@ -18,7 +18,7 @@ copy .env.local.example .env.local
 
 Edit `.env.local` if needed:
 ```
-NEXT_PUBLIC_API_URL=http://localhost:8000
+NEXT_PUBLIC_API_URL=https://api.soarxtax.com
 ```
 
 ### 3. Run Development Server
@@ -27,7 +27,7 @@ NEXT_PUBLIC_API_URL=http://localhost:8000
 npm run dev
 ```
 
-Visit: http://localhost:3000
+Visit the local development URL shown by the terminal.
 
 ## Architecture Overview
 
@@ -146,7 +146,7 @@ cd c:\Users\Qeiha\soarx-fastapi
 python -m uvicorn main:app --reload
 ```
 
-Backend should be available at: `http://localhost:8000`
+Backend should be available at the configured backend URL.
 
 ### Required Backend Endpoints
 
@@ -176,7 +176,7 @@ Backend should be available at: `http://localhost:8000`
 ## Troubleshooting
 
 ### "Cannot reach backend" error
-- Check if FastAPI is running on `http://localhost:8000`
+- Check if FastAPI is running at the configured backend URL
 - Verify `NEXT_PUBLIC_API_URL` in `.env.local`
 - Check browser console for network errors
 

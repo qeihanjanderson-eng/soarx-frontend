@@ -17,7 +17,7 @@ A modern Next.js + React + TailwindCSS application for AI-powered Excel reasonin
 - **Styling**: TailwindCSS
 - **State Management**: React Hooks
 - **API Client**: Fetch API
-- **Backend**: FastAPI (runs on `http://localhost:8000`)
+- **Backend**: FastAPI (configured via `NEXT_PUBLIC_API_URL`)
 
 ## Project Structure
 
@@ -53,7 +53,7 @@ soarx-frontend/
 
 - Node.js 18+
 - npm or yarn
-- FastAPI backend running on `http://localhost:8000`
+- FastAPI backend running on the configured backend URL
 
 ### Installation
 
@@ -81,7 +81,7 @@ soarx-frontend/
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open the local development URL shown by Next.js in your browser.
 
 **Production build**:
 ```bash
@@ -114,7 +114,7 @@ All API calls are handled in `/utils/api.ts`.
 ### Environment Variables
 
 ```bash
-NEXT_PUBLIC_API_URL=http://localhost:8000  # Backend API URL
+NEXT_PUBLIC_API_URL=https://api.soarxtax.com  # Backend API URL
 ```
 
 ### Customization

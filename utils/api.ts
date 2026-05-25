@@ -1,6 +1,11 @@
-'use client';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? '';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.soarxtax.com';
+function getApiBaseUrl() {
+  if (!API_BASE_URL || API_BASE_URL.trim().length === 0) {
+    throw new Error('Backend URL is not configured. Set NEXT_PUBLIC_API_URL in your environment.');
+  }
+  return API_BASE_URL;
+}
 
 interface ReasonResponse {
   answer: string;
@@ -31,7 +36,7 @@ export async function sendMessageToReason(
   try {
     onProgress?.('Sending message to reasoning engine...');
 
-    const response = await fetch(`${API_BASE_URL}/reason`, {
+    const response = await fetch(`${getApiBaseUrl()}/reason`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -48,7 +53,11 @@ export async function sendMessageToReason(
     return data;
   } catch (error) {
     console.error('Error sending message to reason:', error);
-    throw error;
+    throw new Error(
+      error instanceof Error
+        ? `Unable to reach the SoarX backend: ${error.message}`
+        : 'Unable to reach the SoarX backend. Please check your connection or API configuration.'
+    );
   }
 }
 
@@ -62,7 +71,7 @@ export async function uploadFile(
 
     onProgress?.(0);
 
-    const response = await fetch(`${API_BASE_URL}/upload_file`, {
+    const response = await fetch(`${getApiBaseUrl()}/upload_file`, {
       method: 'POST',
       body: formData,
     });
@@ -77,7 +86,11 @@ export async function uploadFile(
     return data;
   } catch (error) {
     console.error('Error uploading file:', error);
-    throw error;
+    throw new Error(
+      error instanceof Error
+        ? `Unable to upload file: ${error.message}`
+        : 'Unable to upload file. Please check your connection and try again.'
+    );
   }
 }
 
@@ -86,7 +99,7 @@ export async function generateWordReport(
   sections: string[]
 ): Promise<ExportWordResponse> {
   try {
-    const response = await fetch(`${API_BASE_URL}/export_word`, {
+    const response = await fetch(`${getApiBaseUrl()}/export_word`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -105,13 +118,13 @@ export async function generateWordReport(
     return data;
   } catch (error) {
     console.error('Error generating Word report:', error);
-    throw error;
+    throw new Error('Unable to generate the report. Please check your connection and try again.');
   }
 }
 
 export async function testConnection(): Promise<boolean> {
   try {
-    const response = await fetch(`${API_BASE_URL}/`, {
+    const response = await fetch(`${getApiBaseUrl()}/`, {
       method: 'GET',
     });
     return response.ok;

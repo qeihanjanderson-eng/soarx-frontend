@@ -152,57 +152,53 @@ export default function ClientRoot() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-white">
-      <div className="mx-auto flex h-screen max-w-[1600px] flex-col px-4 py-4 sm:px-6">
-        <header className="flex items-center justify-between gap-4 pb-4">
-          <div>
-            <p className="text-xs uppercase tracking-[0.28em] text-cyan-300/70">SoarX Copilot</p>
-            <h1 className="mt-2 text-2xl font-semibold sm:text-3xl">Finance chat assistant</h1>
+      <div className="mx-auto flex min-h-screen max-w-7xl flex-col px-4 py-5 sm:px-6">
+        <header className="mx-auto w-full max-w-3xl">
+          <div className="mb-4 flex items-center justify-between gap-4">
+            <div>
+              <p className="text-xs uppercase tracking-[0.28em] text-cyan-300/70">SoarX Copilot</p>
+              <h1 className="mt-2 text-2xl font-semibold sm:text-3xl">Finance chat assistant</h1>
+            </div>
+            <button
+              type="button"
+              onClick={() => setSidebarOpen(true)}
+              className="inline-flex rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white transition hover:bg-white/10 lg:hidden"
+            >
+              Tools
+            </button>
           </div>
-          <button
-            type="button"
-            onClick={() => setSidebarOpen(true)}
-            className="inline-flex rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white transition hover:bg-white/10 lg:hidden"
-          >
-            Tools
-          </button>
         </header>
 
-        <div className="relative flex flex-1 overflow-hidden rounded-[2rem] border border-white/10 bg-slate-950/90 shadow-2xl">
-          <main className="flex-1 overflow-hidden">
-            <div className="flex h-full flex-col overflow-hidden">
-              <div className="border-b border-white/10 px-6 py-5">
-                <div className="max-w-3xl">
-                  <p className="text-xs uppercase tracking-[0.3em] text-cyan-300/75">AI Assistant</p>
-                  <h2 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
-                    Ask SoarX for finance insights
-                  </h2>
-                  <p className="mt-2 max-w-2xl text-sm text-white/70">
-                    Upload workbooks, ask questions, and generate reports with a modern chat experience.
-                  </p>
-                </div>
+        <div className="flex flex-1 flex-col gap-6 lg:flex-row">
+          <main className="relative flex min-h-[calc(100vh-6rem)] flex-1 flex-col overflow-hidden rounded-[2rem] border border-white/10 bg-slate-950/95 shadow-soarx-glow">
+            <div className="border-b border-white/10 px-6 py-5">
+              <div className="max-w-3xl">
+                <p className="text-xs uppercase tracking-[0.3em] text-cyan-300/75">AI Assistant</p>
+                <h2 className="mt-3 text-xl font-semibold text-white sm:text-2xl">
+                  Ask SoarX for finance insights
+                </h2>
+                <p className="mt-2 max-w-2xl text-sm text-white/70">
+                  Upload workbooks, ask questions, and generate reports from one modern chat interface.
+                </p>
               </div>
+            </div>
 
-              {statusMessage ? (
-                <div className="border-b border-white/10 bg-cyan-500/10 px-6 py-3 text-sm text-cyan-100">
-                  {statusMessage}
-                </div>
-              ) : null}
-
-              <div className="flex-1 overflow-hidden">
-                <Chat messages={messages} onSendMessage={handleSendMessage} isLoading={isLoading} />
+            {statusMessage ? (
+              <div className="border-b border-white/10 bg-slate-950/90 px-6 py-4">
+                <p className="text-sm text-cyan-100">{statusMessage}</p>
               </div>
+            ) : null}
+
+            <div className="flex-1 overflow-hidden">
+              <Chat messages={messages} onSendMessage={handleSendMessage} isLoading={isLoading} />
             </div>
           </main>
 
-          {sidebarOpen ? (
-            <button
-              type="button"
-              onClick={() => setSidebarOpen(false)}
-              className="fixed inset-0 z-30 bg-black/40 lg:hidden"
-            />
-          ) : null}
-
-          <aside className={`fixed inset-y-0 right-0 z-40 w-full max-w-xs border-l border-white/10 bg-slate-950/95 p-5 shadow-2xl transition-transform duration-300 lg:static lg:block ${sidebarOpen ? 'translate-x-0' : 'translate-x-full'} lg:translate-x-0`}>
+          <aside
+            className={`fixed inset-y-0 right-0 z-40 w-full max-w-xs border-l border-white/10 bg-slate-950/98 p-5 shadow-2xl transition-transform duration-300 lg:static lg:translate-x-0 ${
+              sidebarOpen ? 'translate-x-0' : 'translate-x-full'
+            }`}
+          >
             <div className="mb-5 flex items-center justify-between gap-3">
               <div>
                 <p className="text-xs uppercase tracking-[0.24em] text-cyan-300/80">Workspace tools</p>
@@ -213,7 +209,7 @@ export default function ClientRoot() {
                 onClick={() => setSidebarOpen(false)}
                 className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white lg:hidden"
               >
-                ×
+                Close
               </button>
             </div>
 
@@ -243,6 +239,14 @@ export default function ClientRoot() {
               <ResultsPanel result={result} isVisible={!!result} />
             </div>
           </aside>
+
+          {sidebarOpen ? (
+            <button
+              type="button"
+              onClick={() => setSidebarOpen(false)}
+              className="fixed inset-0 z-30 bg-black/40 lg:hidden"
+            />
+          ) : null}
         </div>
       </div>
     </div>
