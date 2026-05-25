@@ -16,7 +16,7 @@ export default function ActionButtons({
   isLoading,
 }: ActionButtonsProps) {
   return (
-    <div className="card p-4 m-4 space-y-2">
+    <div className="glass-panel p-4 space-y-3">
       <button
         type="button"
         onClick={onFillExcel}

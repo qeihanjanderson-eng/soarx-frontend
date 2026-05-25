@@ -16,10 +16,11 @@ export default function SheetSelector({
   disabled = false,
 }: SheetSelectorProps) {
   return (
-    <div className="card p-4 m-4">
-      <label className="block text-sm font-medium text-soarx-silver mb-2 text-futuristic">
-        Sheet
-      </label>
+    <div className="glass-panel p-4">
+      <div className="sidebar-item mb-3">
+        <span className="sidebar-icon">📄</span>
+        <span className="font-semibold text-white">Sheet</span>
+      </div>
       <select
         value={selected}
         onChange={(e) => onSelect(e.target.value)}
