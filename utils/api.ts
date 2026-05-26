@@ -35,6 +35,7 @@ export async function sendMessageToReason(
 ): Promise<ReasonResponse> {
   try {
     onProgress?.('Sending message to reasoning engine...');
+    console.log("API URL:", getApiBaseUrl());
 
     const response = await fetch(`${getApiBaseUrl()}/reason`, {
       method: 'POST',
